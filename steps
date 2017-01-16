@@ -1,0 +1,72 @@
+PPT 10: Git: Conectar con repositorios
+
+git init
+
+git remote add pdv https://github.com/dmcisneros/punta_del_verde.git
+
+mkdir echo "Este es mi primer fichero en github" > README.MD
+
+PPT 11: Git: Operaciones comunes
+
+git add README.MD
+
+git commit -m "Mi primer commit a git" .
+
+git commit pdv master
+
+Editar el fichero en github y hacer un pull: 
+
+git pull pdv master
+
+Editar el fichero en github y en local e intentar hacer un pull: 
+
+git pull pdv master	//Dará un fallo en la actualización
+
+git add README.MD
+
+git commit -m "fichero con conficto" .
+
+git push pdv master //No permite subirlo al haber diferencias, hay que realizar un pull
+
+git pull pdv master // Genera un conflicto que es necesario subsanar
+
+//Subsanar el error en el fichero y :
+git add README.MD
+git commit -m "subsanado error en readme" .
+git push pdv master
+
+
+PPT 13: Git: Branches
+
+git checkout -b feature_x
+//Mostrar branches y explicarlos: git branch --all
+//Modificar el fichero y hacer add, commit y push
+//Cambiar de rama y ver como cambia el contenido del fichero
+
+PPT 14: Git: Branches
+
+//Hacer merge entre ramas, modificar el fichero en ambas ramas y hacer push, explicar que hemos acabado la funcionalidad y queremos eliminarla. 
+git checkout master
+git merge feature_x
+git add README.MD
+git commit -m "feature_x merged" 
+git push pdv master
+
+
+//Crear más ramas
+git checkout -b feature_y
+//Hacer push
+//Eliminar la rama
+git branch -D feature_y
+git push --delete pdv feature_y
+
+
+
+PPT 15: Git: Tags
+//Explicar creación de tags
+git tag 1.0.0 -m "comentario"
+git checkout 1.0.0
+git branch
+
+//Mostrar los pasos que hemos realizado con sourcetree
+
