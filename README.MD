@@ -8,7 +8,7 @@ Comenzar indicando que el objetivo de la ponencia es que conozcan git y github a
 <br/>
 4º Que es github: asociandolo a la explicacion anterior de repositorios. // Preguntar quien ha trabajado con github
 <br/>
-5º Git + github: Instalación: indicar que hay diferentes editores gráficos, pero para no limitarnos a un cliente mejor utilizar la consola para poder 
+5º Git + github: Instalación: indicar que hay diferentes editores gráficos, pero para no limitarnos a un cliente mejor utilizar la consola 
 <br/>
 6º Añadir un repositorio en github: 
 <br/>
