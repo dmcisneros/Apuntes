@@ -39,7 +39,7 @@ vi /etc/varnish/default.vcl
 </strong></pre>
 </blockquote>
 
-3º Editar la información del backend
+5º Editar la información del backend
 <blockquote>
 <pre><strong>
 
