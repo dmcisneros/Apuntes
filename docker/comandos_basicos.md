@@ -143,4 +143,5 @@
 					</div><!--/.entry-->
 					
 				</div><!--/.post-inner-->	
-			</article>
+<p>Arrancar un contenedor:docker run -d --name jenkins-renfe-01 -p 8080:8080  jenkins-renfe</p>			
+</article>
