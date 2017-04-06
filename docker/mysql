@@ -1,0 +1,4 @@
+
+docker create --name mysql_data -v /var/lib/mysql mysql
+
+docker run --name mysqldb --volumes-from mysql_data -v /var/lib/mysql:/var/lib/mysql -e MYSQL_USER=mysql -e MYSQL_PASSWORD=mysql -e MYSQL_DATABASE=sample -e MYSQL_ROOT_PASSWORD=supersecret -it -p 3306:3306 mysql
