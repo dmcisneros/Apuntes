@@ -1,14 +1,8 @@
-				<div class="post-inner group">
-					
-					<h1 class="post-title">Docker: Comandos utiles</h1>
-					<p class="post-byline">by <a href="http://www.blog.teraswap.com/author/teraswapgmail-com/" title="Entradas de Teraswap" rel="author">Teraswap</a> · 09/11/2014</p>
-					
-										
-					<div class="clear"></div>
-					
-					<div class="entry">	
-						<div class="entry-inner">
-							<p>Docker a medida que fue evolucionando fue añadiendo comandos para facilitarnos ciertas tareas pero también fue removiendo otros para agrupar esas funcionalidades dentro de otros. Un caso claro de esta situación&nbsp;es&nbsp;&nbsp;el comando&nbsp;<strong>insert </strong>(este comando es el que se usaba para copiar archivos de la maquina host a lo que es el contenedor), esta funcionalidad fue deprecada a partir de la&nbsp;versión&nbsp;0.7 y en su lugar esta funcionalidad fue reemplazada por la ejecución de una serie de comandos pre-existentes en viejas versiones-</p>
+<div class="post-inner group">
+	<h1 class="post-title">Docker: Comandos utiles</h1>
+	<div class="entry">	
+		<div class="entry-inner">
+			<p>Docker a medida que fue evolucionando fue añadiendo comandos para facilitarnos ciertas tareas pero también fue removiendo otros para agrupar esas funcionalidades dentro de otros. Un caso claro de esta situación&nbsp;es&nbsp;&nbsp;el comando&nbsp;<strong>insert </strong>(este comando es el que se usaba para copiar archivos de la maquina host a lo que es el contenedor), esta funcionalidad fue deprecada a partir de la&nbsp;versión&nbsp;0.7 y en su lugar esta funcionalidad fue reemplazada por la ejecución de una serie de comandos pre-existentes en viejas versiones-</p>
 <p>Entre los comandos mas útiles se encuentran los siguientes:</p>
 <ul>
 <li><strong>docker info</strong> nos brinda información acerca de la cantidad de contenedores e&nbsp;imágenes&nbsp;que se encuentran actualmente en nuestra maquina como así también la versión del kernel &nbsp;de Docker que se esta ejecutando.</li>
@@ -138,8 +132,7 @@
 <li><strong>No usar el comando docker export</strong>: A la hora de ver la lista de comandos con los que cuenta Docker y ver el comando export instintivamente cualquiera pensaria que seria la opcion mas logica para poder exportar las imagenes que se tienen pero no lo es asi. El comando en cuestion solo sirve para hacer un export del contenedor y volverlo a cargar en caso de que algo se rompa antes de que hagamos commit de los cambios o dicho de otra forma el export sirve para exportar contenedores y cargarlos nuevamente solo el contenedor sigue corriendo.</li>
 </ul>
 <p>A grandes rasgos con estos comandos y haciendo estas ultimas salvedades se pueden cubrir las operaciones basicas dentro de lo que es el mundo de Docker</p>
-						<div class="clear"></div>				
-					</div><!--/.entry-->
-					
-				</div><!--/.post-inner-->	
+<div class="clear"></div>				
+</div>
+</div>	
 <p>Arrancar un contenedor:docker run -d --name jenkins-renfe-01 -p 8080:8080  jenkins-renfe</p>			
