@@ -1,4 +1,3 @@
-<article class="post-58 post type-post status-publish format-standard has-post-thumbnail hentry category-docker tag-docker-2">	
 				<div class="post-inner group">
 					
 					<h1 class="post-title">Docker: Comandos utiles</h1>
@@ -144,4 +143,3 @@
 					
 				</div><!--/.post-inner-->	
 <p>Arrancar un contenedor:docker run -d --name jenkins-renfe-01 -p 8080:8080  jenkins-renfe</p>			
-</article>
