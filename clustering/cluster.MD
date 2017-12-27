@@ -1,11 +1,4 @@
-<html class="no-js" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US" dir="ltr" prefix="og: http://ogp.me/ns#"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<head>
-	
-	<link rel="stylesheet" type="text/css" href="css/ac-globalnav.built.css">
-	<link rel="stylesheet" type="text/css" href="css/ac-localnav.built.css">
-	<link rel="stylesheet" type="text/css" href="css/ac-globalfooter.built.css">
-	<link rel="stylesheet" type="text/css" href="css/localeswitcher.built.css">
-</head
+<html class="no-js" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US" dir="ltr" prefix="og: http://ogp.me/ns#"><head>
 <body>
 <div style="font-size: 17px;
     line-height: 1.47059;
