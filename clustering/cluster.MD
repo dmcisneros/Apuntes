@@ -401,7 +401,7 @@ selectorTimeout="5000" maxThreads="6"&gt;&lt;/Receiver&gt;<br />
 
 <p style="margin-left: 40px;">Con las configuraciones descritas tendríamos un cluster de liferay como base al que tendríamos que ajustar ciertos valores y realizar un tunning adecuado, dicho tunning se ha descrito de forma detallada en&nbsp;éste enlace:</p>
 
-<p style="margin-left: 40px;"><a href="liferay-performance-tunning.html">liferay-performance-tunning.html</a></p>
+<p style="margin-left: 40px;"><a href="liferay-performance-tunning.MD">liferay-performance-tunning/a></p>
 
 <p style="margin-left: 40px;">(*) A modo de comentario entre el balanceador y el servidor web se podría hacer uso de otro elemento de caché como podría ser un varnish que tenga como backend el apache.</p>
 
