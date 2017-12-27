@@ -1,0 +1,5 @@
+out.println("TimeZone from System Properties: " + com.liferay.portal.kernel.util.SystemProperties.get("user.timezone"));
+out.println("TimeZone from System: " + System.getProperty("user.timezone"));
+out.println("TimeZone from VM: " + new GregorianCalendar().getTimeZone());
+out.println("TimeZone from Company: " + com.liferay.portal.util.PortalUtil.getCompany(actionRequest).getTimeZone());
+out.println("TimeZone from User: " + com.liferay.portal.util.PortalUtil.getUser(actionRequest).getTimeZone());

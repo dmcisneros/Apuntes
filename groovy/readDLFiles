@@ -1,0 +1,26 @@
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+static long companyId = 20155
+static long folderId = 34794
+static long groupId = 20182
+List<DLFileEntry> listaDocumentos =  DLFileEntryLocalServiceUtil.getFileEntries(groupId, folderId);
+
+for (DLFileEntry dl: listaDocumentos ) {
+	DLFileVersion dlVersion =dl.getLatestFileVersion(true);
+	AssetEntry curAssetEntry = AssetEntryLocalServiceUtil.getEntry(DLFileEntry.class.getCanonicalName(), dl.getFileEntryId());    		
+	println(dlVersion.getTitle());
+	println(" dlentry getCreateDate: "+ dl.getCreateDate());
+	println(" dlentry getModifiedDate: "+ dl.getModifiedDate());
+	curAssetEntry.setPublishDate(dl.getModifiedDate());
+	dl.setCreateDate(dl.getModifiedDate());
+	AssetEntryLocalServiceUtil.updateAssetEntry(curAssetEntry);
+	DLFileEntryLocalServiceUtil.updateDLFileEntry(dl);
+    println("asset:"+curAssetEntry.getPublishDate());
+    Indexer indexer = IndexerRegistryUtil.getIndexer(DLFileEntry.class);
+    indexer.reindex(dl);
+}

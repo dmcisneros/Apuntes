@@ -1,0 +1,56 @@
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserLocalServiceUtil;
+		
+import java.io.File;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.util.List;
+
+private final Log LOG = LogFactoryUtil.getLog("------Update Expando Users------");
+try{
+	
+	LOG.info("--------------- Startint script");
+
+	File file = new File("/tmp/liferay/usersProfileUpdate/userNotPicture.txt"); 
+	List<String> userList = Files.readAllLines(file.toPath(), Charset.forName("UTF-8"));
+	
+	long companyId = 20155L; 
+	int indice = 0;
+	String firstName = "";
+	String lastName = "";
+	String peselNumber = "";
+	String restaurantNumber = "";
+	DynamicQuery query = null;
+
+	User user1 = null;
+	
+	//Each user is reached and updated en DB if it´s not repeated
+	for (String line: userList) {
+			screenName = line;
+		
+			out.println("screenName: "+screenName);
+	
+			
+			if(null != screenName && !("").equals(screenName)){
+				user1 = UserLocalServiceUtil.fetchUserByScreenName(companyId, screenName);
+				if(null != user1){		
+					user1.getExpandoBridge().setAttribute("mostrar-imagen-perfil", false);
+					UserLocalServiceUtil.updateUser(user1);
+					out.println("Updated screenName "+screenName);
+				}else{
+					out.println("User not found: "+ screenName );
+				}					
+				
+			}else{
+				out.println("NAME OR SURNAME EMPTY");
+			}
+	}
+	out.println("--------------- Finished script");
+	
+}catch(Exception e){
+	out.println("ERROR");
+}

@@ -1,0 +1,79 @@
+// Groovy para cambiar los permisos a todos los ficheros por debajo de una carpeta dada.
+
+import java.util.ArrayList
+import java.util.Iterator
+import java.util.List
+import java.util.ListIterator
+
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryModel
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType
+import com.liferay.portal.service.ResourceActionLocalServiceUtil
+import com.liferay.portal.service.ResourcePermissionLocalServiceUtil
+import com.liferay.portal.service.RoleLocalServiceUtil
+import com.liferay.portal.model.ResourceConstants
+import com.liferay.portal.model.ResourcePermission
+import com.liferay.portal.model.ResourceAction
+import com.liferay.portal.model.Role
+import com.liferay.portal.model.RoleConstants
+import com.liferay.portal.security.permission.ActionKeys
+import com.liferay.counter.service.CounterLocalServiceUtil
+
+class Globals {
+static long companyId = 20155
+static long folderId = 34794
+static long groupId = 20182
+static Role siteMemberRole = RoleLocalServiceUtil.getRole(Globals.companyId, RoleConstants.SITE_MEMBER)
+static ResourceAction dlFileEntryAction = ResourceActionLocalServiceUtil.getResourceAction(DLFileEntry.class.getName(), ActionKeys.VIEW)
+static ResourceAction dlFolderEntryAction = ResourceActionLocalServiceUtil.getResourceAction(DLFolder.class.getName(), ActionKeys.VIEW)
+}
+
+def recursivePermission(currentFolderId){
+   DLFolder currentFolder = DLFolderLocalServiceUtil.getFolder(currentFolderId)
+   out.println("FOLDER : "+currentFolder.getName())
+   List<ResourcePermission> currentFolderResourcePermissions = null;
+   try {
+      currentFolderResourcePermissions = ResourcePermissionLocalServiceUtil.getResourcePermissions(Globals.companyId, DLFolder.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(currentFolder.getPrimaryKey()));
+   } catch (com.liferay.portal.NoSuchResourcePermissionException e) {
+        out.println("No tiene permisos asociados ... ")
+   }
+   if(currentFolderResourcePermissions!=null){
+    List<DLFileEntry> fileEntries = DLFileEntryLocalServiceUtil.getFileEntries(Globals.groupId, currentFolderId);
+    for (DLFileEntry fileEntry : fileEntries){
+      out.println("FILE : "+fileEntry.getTitle())
+     
+        for(ResourcePermission resource:currentFolderResourcePermissions){
+           try {
+            out.println("Creando permiso ... "+resource.getRoleId())
+            out.println("Accion permiso ... "+resource.getActionIds())
+            ResourcePermission newResourcePermission = ResourcePermissionLocalServiceUtil.createResourcePermission(CounterLocalServiceUtil.increment());
+            newResourcePermission.setCompanyId(resource.getCompanyId());
+            newResourcePermission.setName(DLFileEntry.class.getName());
+            newResourcePermission.setScope(resource.getScope());
+            newResourcePermission.setPrimKey(String.valueOf(fileEntry.getPrimaryKey()));
+            newResourcePermission.setRoleId(resource.getRoleId());
+            newResourcePermission.setActionIds(resource.getActionIds());
+            ResourcePermissionLocalServiceUtil.updateResourcePermission(newResourcePermission);
+            } catch (Exception e) {
+              out.println("El permiso ya existe ... ");
+              ResourcePermission currentFileResourceUpdatePermission = ResourcePermissionLocalServiceUtil.getResourcePermission(resource.getCompanyId(), DLFileEntry.class.getName(), resource.getScope(), String.valueOf(fileEntry.getPrimaryKey()), resource.getRoleId());
+              currentFileResourceUpdatePermission.setActionIds(resource.getActionIds())
+              ResourcePermissionLocalServiceUtil.updateResourcePermission(currentFileResourceUpdatePermission)
+          }
+        }
+      
+    }
+  }
+ 
+ List<DLFolder> folders = DLFolderLocalServiceUtil.getFolders(Globals.groupId, currentFolderId)
+ for (DLFolder subFolder : folders){
+    recursivePermission(subFolder.getFolderId())
+ }
+}
+
+
+recursivePermission(Globals.folderId)

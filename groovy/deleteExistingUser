@@ -1,0 +1,6 @@
+import com.liferay.portal.model.User ;
+import com.liferay.portal.service.UserLocalServiceUtil ;
+
+User user= UserLocalServiceUtil.getUserByEmailAddress(20155L, "test@test.es");
+User userDeleted=UserLocalServiceUtil.deleteUser(user);
+out.println(user);
