@@ -84,16 +84,7 @@ SSLCertificateChainFile /etc/pki/tls/certs/example.com.ca-bundle
 <pre>NameVirtualHost *:80
 
 &lt;VirtualHost *:80&gt;
-    ServerAdmin <span id="cloak38786"><a href="mailto:email@example.com">email@example.com</a></span><script type="text/javascript">
- //<!--
- document.getElementById('cloak38786').innerHTML = '';
- var prefix = '&#109;a' + 'i&#108;' + '&#116;o';
- var path = 'hr' + 'ef' + '=';
- var addy38786 = '&#101;m&#97;&#105;l' + '&#64;';
- addy38786 = addy38786 + '&#101;x&#97;mpl&#101;' + '&#46;' + 'c&#111;m';
- document.getElementById('cloak38786').innerHTML += '<a ' + path + '\'' + prefix + ':' + addy38786 + '\'>' + addy38786+'<\/a>';
- //-->
- </script>
+    ServerAdmin <span id="cloak38786"><a href="mailto:email@example.com">email@example.com</a></span>
     DocumentRoot /var/www/html/virtual-web
     ServerName virtual-web.example.com
 &lt;/VirtualHost&gt;
