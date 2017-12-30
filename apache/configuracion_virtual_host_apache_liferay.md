@@ -16,10 +16,6 @@ AddDefaultCharset utf-8
 
 #<IfModule mod_proxy_ajp>
    ProxyRequests On
-
-   ProxyPass "/vhb.html" "!"
-   ProxyPassReverse "/vhb.html" "!"
-
    ProxyPass / "balancer://apache-cluster/" stickysession=JSESSIONID
    ProxyPassReverse / "balancer://apache-cluster/" stickysession=JSESSIONID
 #</IfModule>
