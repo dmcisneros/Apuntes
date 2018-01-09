@@ -1,0 +1,114 @@
+pipeline {
+  agent {
+    label 'Liferay Remote' 
+  }
+  environment {
+	VALIDATION_FILE = "${WORKSPACE}/validations/validation_${BUILD_NUMBER}.txt"
+	VALIDATION_FOLDER = "${WORKSPACE}/validations"
+  }
+  stages {
+     stage('LIF_Download') { // for display purposes
+		steps {
+				checkout([$class: 'GitSCM', branches: [[name: 'develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'GitlabUserPass', url: '$URL_GIT']]])
+				git branch: '$BRANCH', credentialsId: 'GitlabUserPass', url: '$URL_GIT'
+			}
+	   post {
+			success {
+				writeFile(file: "${VALIDATION_FILE}", text: 'Download: SUCCESS \n')
+			}
+			failure {
+				writeFile(file: "${VALIDATION_FILE}", text: 'Download: FAILURE \n')
+				jiraComment body: "There is a problem on LIF_Download Repository step in $JOB_NAME build process", issueKey: "${ISSUE_KEY}"
+			}
+
+	   }
+	}
+	stage('Stage_Compile') {
+		steps {
+		parallel( modules:{
+			echo 'gradle build'
+			sh '''cd workspace/modules
+			gradle build'''
+		},theme:{
+			echo 'theme'
+			sh '''cd workspace/themes/orange-theme
+            gulp build''' 
+		},layouts:{
+			echo 'layouts'
+			sh '''cd workspace/themes/
+			for d in *-layouttpl/ ; do
+				cd $d
+				echo "Compilando $d"
+				gulp build
+				cd ..
+			done'''
+		}
+		)}
+	   post {
+			success {
+				writeFile(file: "${VALIDATION_FILE}", text: 'LIF_Junit: SUCCESS \n')
+			}
+			failure {
+				writeFile(file: "${VALIDATION_FILE}", text: 'LIF_Junit: FAILURE \n')
+				jiraComment body: "There is a problem on LIF_Junit Repository step in $JOB_NAME build process", issueKey: "${ISSUE_KEY}"
+			}
+
+	   }
+	}
+    stage('Stage_QUALITY') {
+		steps {
+		parallel( unitTest:{
+			echo 'unitTest'
+			sh ''' cd workspace/modules
+			gradle test '''
+		},sonar:{
+			echo 'sonar'
+			sh ''' JAVA_HOME=/home/jslavsoe/java/jdk1.8.0_101
+				cd workspace
+				echo systemProp.sonar.host.url=http://10.113.52.221:9000/sonarqube >> gradle.properties
+				echo systemProp.sonar.login=7fef5ab3f4cdc1e102ef423939876dc72fb71af8 >> gradle.properties
+				echo systemProp.https.proxyHost=10.113.55.100 >> gradle.properties
+				echo systemProp.https.proxyPort=8080 >> gradle.properties
+				echo systemProp.http.proxyHost=10.113.55.100 >> gradle.properties
+				echo systemProp.http.proxyPort=8080 >> gradle.properties
+				
+				
+				#gradle sonarqube --info
+				gradle -Dhttp.proxyHost=10.113.55.100 -Dhttp.proxyPort=8080 -Dhttps.proxyHost=10.113.55.100 -Dhttps.proxyPort=8080 --info sonarqube 
+			'''
+		},qa:{
+			echo 'qa'
+			sh ''' cd workspace/modules
+			gradle check '''
+		}
+		)}
+	   post {
+			success {
+				writeFile(file: "${VALIDATION_FILE}", text: 'LIF_Junit: SUCCESS \n')
+			}
+			failure {
+				writeFile(file: "${VALIDATION_FILE}", text: 'LIF_Junit: FAILURE \n')
+				jiraComment body: "There is a problem on LIF_Junit Repository step in $JOB_NAME build process", issueKey: "${ISSUE_KEY}"
+			}
+
+	   }
+	}
+    stage('LIF_Upload_Artifactory') {
+		steps {
+			sh '''
+			cd workspace
+			gradle uploadArchives -x downloadNode -x npmInstall -x gulpBuild
+			'''
+		}
+		post {
+			success {
+				sh "echo LIF_Upload_Artifactory: SUCCESS >> ${VALIDATION_FILE}"
+			}
+			failure {
+				sh "echo LIF_Upload_Artifactory: FAILURE >> ${VALIDATION_FILE}"
+				jiraComment body: 'There is a problem on SOE_RemoveJar_Java Repository step in $JOB_NAME build process', issueKey: "${ISSUE_KEY}"
+			}
+		}
+	}
+  }
+}
