@@ -65,16 +65,7 @@ pipeline {
 			echo 'sonar'
 			sh ''' JAVA_HOME=/home/jslavsoe/java/jdk1.8.0_101
 				cd workspace
-				echo systemProp.sonar.host.url=http://10.113.52.221:9000/sonarqube >> gradle.properties
-				echo systemProp.sonar.login=7fef5ab3f4cdc1e102ef423939876dc72fb71af8 >> gradle.properties
-				echo systemProp.https.proxyHost=10.113.55.100 >> gradle.properties
-				echo systemProp.https.proxyPort=8080 >> gradle.properties
-				echo systemProp.http.proxyHost=10.113.55.100 >> gradle.properties
-				echo systemProp.http.proxyPort=8080 >> gradle.properties
-				
-				
-				#gradle sonarqube --info
-				gradle -Dhttp.proxyHost=10.113.55.100 -Dhttp.proxyPort=8080 -Dhttps.proxyHost=10.113.55.100 -Dhttps.proxyPort=8080 --info sonarqube 
+				gradle --info sonarqube 
 			'''
 		},qa:{
 			echo 'qa'

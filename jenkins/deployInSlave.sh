@@ -116,32 +116,32 @@ fi
 echo Deploying to $ENTORNO from jenkins....
 if [ $ENTORNO == "DESARROLLO" ];
 then
-	HOST_TO_DEPLOY="10.113.102.30"
-	HOST_USER="orange"
-	NEXUS_REPOSITORY="http://10.113.52.95:8081/nexus/service/local/repositories/liferay-releases/content"
+	HOST_TO_DEPLOY="XXX"
+	HOST_USER="liferay"
+	NEXUS_REPOSITORY="http://XXX:XXX/nexus/service/local/repositories/liferay-releases/content"
 	remote_deploy
 fi
 
 if [ $ENTORNO == "INTEGRACION" ];
 then
-	HOST_TO_DEPLOY="10.113.47.80"
+	HOST_TO_DEPLOY="XXX"
 	HOST_USER="liferay"
-	NEXUS_REPOSITORY="http://10.113.52.95:8081/nexus/service/local/repositories/liferay-releases/content"
+	NEXUS_REPOSITORY="http://XXX:XXX/nexus/service/local/repositories/liferay-releases/content"
 	remote_deploy
 fi
 
 if [ $ENTORNO == "PREPRODUCCION_NODO_1" ];
 then
-	NEXUS_REPOSITORY="http://10.113.52.95:8081/nexus/service/local/repositories/liferay-releases/content"
-	HOST_TO_DEPLOY="10.113.47.126"
+	NEXUS_REPOSITORY="http://XXX:XXX/nexus/service/local/repositories/liferay-releases/content"
+	HOST_TO_DEPLOY="XXX"
 	HOST_USER="liferay"
 	remote_deploy
 fi
 
 if [ $ENTORNO == "PREPRODUCCION_NODO_2" ]; 
 then
-	NEXUS_REPOSITORY="http://10.113.52.95:8081/nexus/service/local/repositories/liferay-releases/content"
-	HOST_TO_DEPLOY="10.113.47.188"
+	NEXUS_REPOSITORY="http://XXX:XXX/nexus/service/local/repositories/liferay-releases/content"
+	HOST_TO_DEPLOY="XXX"
 	HOST_USER="liferay"
 	remote_deploy
 fi
@@ -149,16 +149,16 @@ fi
 if [ $ENTORNO == "PRODUCCION_NODO_1" ]; 
 then
 	#pendiente de definir la url de las máquinas
-	NEXUS_REPOSITORY="http://10.113.52.95:8081/nexus/service/local/repositories/liferay-releases/content"
-	HOST_TO_DEPLOY="10.113.65.196"	
+	NEXUS_REPOSITORY="http://XXX:XXX/nexus/service/local/repositories/liferay-releases/content"
+	HOST_TO_DEPLOY="XXX"	
 	HOST_USER="liferay"
 	remote_deploy
 fi	
 if [ $ENTORNO == "PRODUCCION_NODO_2" ]; 
 then
 	#pendiente de definir la url de las máquinas
-	NEXUS_REPOSITORY="http://10.113.52.95:8081/nexus/service/local/repositories/liferay-releases/content"
-	HOST_TO_DEPLOY="10.113.65.195"
+	NEXUS_REPOSITORY="http://XXX:XXX/nexus/service/local/repositories/liferay-releases/content"
+	HOST_TO_DEPLOY="XXX"
 	HOST_USER="liferay"
 	remote_deploy
 fi					
