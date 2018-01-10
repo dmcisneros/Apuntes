@@ -9,23 +9,58 @@ pipeline {
   stages {
      stage('LIF_Download') { // for display purposes
 		steps {
-		echo "Param SKIPT_UNIT_TESTS is ${SKIPT_UNIT_TESTS}"
-				if(SKIPT_UNIT_TESTS=='true'){
-					echo "Param SKIPT_UNIT_TESTS is true"
-				}else{
-					echo "Param SKIPT_UNIT_TESTS is false"
-				}
+				checkout([$class: 'GitSCM', branches: [[name: 'develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'GitlabUserPass', url: '$URL_GIT']]])
+				git branch: '$BRANCH', credentialsId: 'GitlabUserPass', url: '$URL_GIT'
 			}
-	   post {
-			success {
-				writeFile(file: "${VALIDATION_FILE}", text: 'Download: SUCCESS \n')
+	}
+	stage('Stage_Compile') {
+		steps {
+		parallel( modules:{
+			echo 'gradle build'
+			sh '''cd workspace/modules
+			gradle build'''
+		},theme:{
+			echo 'theme'
+			sh '''cd workspace/themes/orange-theme
+            gulp build''' 
+		},layouts:{
+			echo 'layouts'
+			sh '''cd workspace/themes/
+			for d in *-layouttpl/ ; do
+				cd $d
+				echo "Compilando $d"
+				gulp build
+				cd ..
+			done'''
+		}
+		)}
+	}
+    stage('Stage_QUALITY') {
+			steps {
+			parallel( unitTest:{
+				echo 'unitTest'
+				sh ''' cd workspace/modules
+				gradle test '''	
+			},sonar:{
+				echo 'sonar'
+				sh ''' JAVA_HOME=/home/jslavsoe/java/jdk1.8.0_101
+				cd workspace
+				gradle --info sonarqube 
+				'''
+			},qa:{
+				echo 'qa'
+				sh ''' cd workspace/modules
+				gradle check '''
 			}
-			failure {
-				writeFile(file: "${VALIDATION_FILE}", text: 'Download: FAILURE \n')
-				jiraComment body: "There is a problem on LIF_Download Repository step in $JOB_NAME build process", issueKey: "${ISSUE_KEY}"
-			}
-
-	   }
+			)}
+	}
+    stage('LIF_Upload_Artifactory') {
+		steps {
+			sh '''
+			cd workspace
+			gradle uploadArchives -x downloadNode -x npmInstall -x gulpBuild
+			'''
+		}
 	}
   }
 }

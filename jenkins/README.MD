@@ -1,3 +1,5 @@
+<body>
+
 <div  style="
     overflow-x: hidden;"><p><strong>Jenkins Liferay Pipeline:</strong></p>
 <p>En los &uacute;ltimos meses tras asistir a algunos eventos y charlas sobre integraci&oacute;n continua conoc&iacute; la flexibilidad y los beneficios que puede aportar los pipelines como alternativa al uso de flow en jenkins y la implementaci&oacute;n de groovy declarativos. En los proyectos en los que normalmente participo principalmente detect&eacute; que podr&iacute;amos disminuir el tiempo de compilaci&oacute;n y despliegue haciendo uso de algunas caracter&iacute;sticas de los pipelines como pueden ser la ejecuci&oacute;n de los procesos en paralelo. A continuaci&oacute;n voy a detallar el uso que hacemos de jenkins en liferay 7.</p>
@@ -73,3 +75,4 @@
 <p style="padding-left: 30px;">El contenido del .sh se puede visualizar <a href="deployInSlave.sh">aqu&iacute;</a></p>
 <p style="padding-left: 30px;"><img src="sources/jenkins_deploy_01.png" /></p>
 </div>
+</body>
