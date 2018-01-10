@@ -1,7 +1,6 @@
 #!/bin/sh
 ##Para llamar a este script:
 #./deployToEnvironment.sh ‘nombremodulo-1 nombremodulo-2'  $VERSION $ENTORNO $GROUP_ID $RUTA_LIFERAY_HOME $USUARIO_DESPLIEGUE
-#./deployToEnvironment.sh ‘1-2-1-columnas-layouttpl 2-1-columnas-layouttpl anticipos-portlet anticipos-workflow autologin-portlet ayuda-portlet conper-portlet customSearch-indexer-postprocessor ddlform-rest orange-compensacionGlobal-portlet orange-form-web orange-languages-hook orange-miNomina-portlet orange-miperfil-portlet orange-miperfilFavoritos-portlet orange-search-web orange-theme pinvalidation-administration-portlet pinvalidation-portlet reconocimientos-read-portlet reconocimientos-write-portlet remedy-portlet sap-portlet' 1.0.0-RC DESARROLLO com/liferay/everis/orange /aplicativo/liferay orange
 COMPONENTES=$1
 COMPONENTES=$(echo ${COMPONENTES//,/ })
 VERSION=$2
@@ -31,10 +30,7 @@ if [[ -n "$ENTORNO" ]]; then
 		
 		COMPONENTE=${i}
 		EXTENSION=.jar
-		if [[ $COMPONENTE == "orange-search-web" ]] || [[ $COMPONENTE == "orange-form-web" ]];
-		then
-			echo El $COMPONENTE es un modulo ext, no será desplegado
-		else
+	
 			echo "component to download:$COMPONENTE"
 			if [[ $COMPONENTE == *layouttpl ]] || [[ $COMPONENTE == *theme ]];
 			then
@@ -107,7 +103,6 @@ if [[ -n "$ENTORNO" ]]; then
 				echo not downloaded from nexus successfully $ARTIFACT
 				exit 1
 			fi
-		fi
 	done
 	
 
