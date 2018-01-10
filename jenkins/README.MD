@@ -66,6 +66,9 @@
 </ul>
 </li>
 </ul>
+
+<p style="padding-left: 30px;"><img src="sources/jenkins_pipeline_tasks.png" /></p>
+
 <pre>/home/jenkins/scripts/deploy/deployInSlave.sh ${BUILD_ENVIRONMENT} ${BUILD_VERSION} ${NEXUS_URL} ${NEXUS_USER} ${NEXUS_PASSWORD} ${PROJECT_REPOSITORY}</pre>
 <p style="padding-left: 30px;">El contenido del .sh se puede visualizar <a href="deployInSlave.sh">aqu&iacute;</a></p>
 <p style="padding-left: 30px;"><img src="sources/jenkins_deploy_01.png" /></p>
