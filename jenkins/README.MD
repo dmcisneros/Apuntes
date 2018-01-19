@@ -10,7 +10,7 @@
 </ul>
 <pre>https://hub.docker.com/_/jenkins/ docker run --name myjenkins -p 8080:8080 -p 50000:50000 -v /var/jenkins_home jenkins</pre>
 <ul>
-<li><strong>Jenkins-slave:</strong> Hemos partido de un centos7 como base y a&ntilde;adido algunas configuraciones para poder enlazar desde el contenedor jenkins-master. Dependiendo de cada proyecto que se utilice &eacute;ste esclavo requerir&aacute; unas aplicaciones u otras, en nuestro caso generamos el dockerfile (A&ntilde;adir el dockerfile y los recursos asociados).</li>
+<li><strong>Jenkins-slave:</strong> Hemos partido de un centos7 como base y a&ntilde;adido algunas configuraciones para poder enlazar desde el contenedor jenkins-master. Dependiendo de cada proyecto que se utilice &eacute;ste esclavo requerir&aacute; unas aplicaciones u otras, en nuestro caso instalamos git, gradle, jdk 8 y node.</li>
 </ul>
 <p>Una vez que tengamos arrancados los dos contenedores podremos configurar nuestro jenkins y su esclavo:</p>
 <ul>
@@ -29,10 +29,11 @@
 <li><strong>Task_Build_Modules:</strong>  Compilaci&oacute;n con gradle de m&oacute;dulos</li>
 <li><strong>Task_Build_Themes:</strong>  Compilaci&oacute;n gulp</li>
 <li><strong>Task_Upload_Nexus:</strong>  Subida a nexus</li>
-<li><strong>Task_Deploy:</strong>  Invocaci&oacute;n de .sh para el despliegue al servidor liferay Continuando con la opci&oacute;n que vamos a utilizar de un jenkinsFile declarativo desde un repositorio de control de versiones que contenga todos los steps como conjunto debemos en a&ntilde;adir un job del tipo pipeline:</li>
+<li><strong>Task_Deploy:</strong>  Invocaci&oacute;n de .sh para el despliegue al servidor liferay</li>
 </ul>
 </li>
 </ul>
+<p> Continuando con la opci&oacute;n que vamos a utilizar de un jenkinsFile declarativo desde un repositorio de control de versiones que contenga todos los steps como conjunto debemos en a&ntilde;adir un job del tipo pipeline:</p>
 <p style="padding-left: 30px;"><img src="sources/jenkins_pipeline_01.png" /></p>
 <p style="padding-left: 30px;">Los parametros de entrada que utilizaremos ser&aacute;n los siguientes:</p>
 <ul>
@@ -64,15 +65,14 @@
 <li><strong>NEXUS_URL:</strong>  Repositorio de artefactos</li>
 <li><strong>NEXUS_USER:</strong>  Usuario de nexus</li>
 <li><strong>NEXUS_PASSWORD:</strong>  Password de nexus</li>
-<li><strong>PROJECT_REPOSITORY:</strong>  Ruta de liferay home El script que invocaremos ser&aacute; el siguiente:</li>
+<li><strong>PROJECT_REPOSITORY:</strong>  Ruta de liferay home, el script que invocaremos ser&aacute; el siguiente:</li>
 </ul>
 </li>
 </ul>
-
-<p style="padding-left: 30px;"><img src="sources/jenkins_pipeline_tasks.png" /></p>
-
 <pre>/home/jenkins/scripts/deploy/deployInSlave.sh ${BUILD_ENVIRONMENT} ${BUILD_VERSION} ${NEXUS_URL} ${NEXUS_USER} ${NEXUS_PASSWORD} ${PROJECT_REPOSITORY}</pre>
 <p style="padding-left: 30px;">El contenido del .sh se puede visualizar <a href="deployInSlave.sh">aqu&iacute;</a></p>
+<p style="padding-left: 30px;"><img src="sources/jenkins_pipeline_tasks.png" /></p>
+
 <p style="padding-left: 30px;"><img src="sources/jenkins_deploy_01.png" /></p>
 </div>
 </body>
