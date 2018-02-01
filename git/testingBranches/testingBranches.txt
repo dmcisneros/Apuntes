@@ -1,4 +1,8 @@
 hi version 03 local merged
 04 local merged
 hi version 04
+
+hi version 02 local merged
+03 local merged
+hi version 04 modified
 remote 05
